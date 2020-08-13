@@ -1,6 +1,7 @@
+import { selectPeople } from './store/index';
 import { AppState } from './store';
 import { Store, select } from '@ngrx/store';
-import { personNew, personAll, personUpdate, personDelete } from './store/person.actions';
+import { PersonNew, PersonAll, PersonUpdate, PersonDelete } from './store/person.actions';
 import { Component, Input } from '@angular/core';
 import { Person } from './person';
 import { Observable } from 'rxjs';
@@ -20,8 +21,11 @@ export class AppComponent {
 
   ngOnInit(){
     // Informando o Store da intenção de modificar o estado atual de minha aplicação
-    this.store.dispatch(new personAll());
-    this.people$ = this.store.pipe(select('people')); // oque quero retornar
+    this.store.dispatch(new PersonAll());
+    // Obtendo as pessoas através de uma váriavel people
+    // que fica dentro da interface AppState
+    //this.people$ = this.store.pipe(select('people')); // oque quero retornar
+    this.people$ = this.store.select(selectPeople);  
   }
 
   addNew() {
@@ -35,23 +39,23 @@ export class AppComponent {
       _id: new Date().getMilliseconds().toString()
     };
  
-    this.store.dispatch(new personNew({person: pes}));
+    this.store.dispatch(new PersonNew({person: pes}));
 
   } 
 
   update(p: Person) {
+   
     p.name = faker.name.findName();
     p.address = faker.address.streetAddress();
     p.city = faker.address.city();
     p.country = faker.address.country();
     p.age = Math.round(Math.random() * 100);
-    p._id = new Date().getMilliseconds().toString();
 
-    this.store.dispatch(new personUpdate({person: p}));
+    this.store.dispatch(new PersonUpdate({person: p}));
 
   }
 
   delete(p: Person) {
-    this.store.dispatch(new personDelete({id: p._id}));
+    this.store.dispatch(new PersonDelete({id: p._id}));
   }
 }

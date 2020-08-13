@@ -9,3 +9,5 @@ export interface AppState {
 export const appReducers : ActionReducerMap<AppState> = {
     people:  fromPersonReducer.reducer
 }
+
+export const selectPeople = (state: AppState) => state.people;

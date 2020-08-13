@@ -9,8 +9,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class PersonComponent implements OnInit {
 
   @Input() person: Person;
-  @Output() delete: EventEmitter<Person> = new EventEmitter<Person>();
-  @Output() update: EventEmitter<Person> = new EventEmitter<Person>();
+  @Output() delete = new EventEmitter<Person>();
+  @Output() update = new EventEmitter<Person>();
   
   constructor() { }
 

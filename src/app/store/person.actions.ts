@@ -8,23 +8,23 @@ export enum PersonActionTypes {
     PERSON_DELETE = '[PERSON_DELETE] Delete a Person'
 }
 
-export class personAll implements Action {
+export class PersonAll implements Action {
     readonly type = PersonActionTypes.PERSON_ALL;
 }
 
-export class personNew implements Action {
+export class PersonNew implements Action {
     readonly type = PersonActionTypes.PERSON_NEW;
     constructor(public payload: {person: Person}){}
 }
 
-export class personUpdate implements Action {
+export class PersonUpdate implements Action {
     readonly type = PersonActionTypes.PERSON_UPDATE;
     constructor(public payload: {person: Person}){}
 }
 
-export class personDelete implements Action {
+export class PersonDelete implements Action {
     readonly type = PersonActionTypes.PERSON_DELETE;
     constructor(public payload: {id: string}){}
 }
 
-export type PersonActions = personAll | personNew | personUpdate | personDelete;
+export type PersonActions = PersonAll | PersonNew | PersonUpdate | PersonDelete;
