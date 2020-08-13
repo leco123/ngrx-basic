@@ -17,7 +17,7 @@ export class AppComponent {
   people$: Observable<Person[]>;
   
 
-  constructor(private store: Store<AppState>){}
+  constructor(protected store: Store<AppState>){}
 
   ngOnInit(){
     // Informando o Store da intenção de modificar o estado atual de minha aplicação
@@ -44,14 +44,25 @@ export class AppComponent {
   } 
 
   update(p: Person) {
-   
-    p.name = faker.name.findName();
-    p.address = faker.address.streetAddress();
-    p.city = faker.address.city();
-    p.country = faker.address.country();
-    p.age = Math.round(Math.random() * 100);
+   /* let pers: Person = p;
+   console.log(pers);
 
-    this.store.dispatch(new PersonUpdate({person: p}));
+   pers.name = faker.name.findName();
+   pers.address = faker.address.streetAddress();
+   pers.city = faker.address.city();
+   pers.country = faker.address.country();
+   pers.age = Math.round(Math.random() * 100);
+   console.log(pers);*/
+
+   let pes: Person = {
+    name: faker.name.findName(),
+    address: faker.address.streetAddress(),
+    city: faker.address.city(),
+    country: faker.address.country(),
+    age: Math.round(Math.random() * 100)
+    //_id: new Date().getMilliseconds().toString()
+  };
+    this.store.dispatch(new PersonUpdate({person: pes}));
 
   }
 
