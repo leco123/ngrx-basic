@@ -1,6 +1,6 @@
-import { AppState } from './store/index';
+import { AppState } from './store';
 import { Store, select } from '@ngrx/store';
-import { personNew } from './store/person.actions';
+import { personNew, personAll, personUpdate, personDelete } from './store/person.actions';
 import { Component, Input } from '@angular/core';
 import { Person } from './person';
 import { Observable } from 'rxjs';
@@ -19,6 +19,8 @@ export class AppComponent {
   constructor(private store: Store<AppState>){}
 
   ngOnInit(){
+    // Informando o Store da intenção de modificar o estado atual de minha aplicação
+    this.store.dispatch(new personAll());
     this.people$ = this.store.pipe(select('people')); // oque quero retornar
   }
 
@@ -38,10 +40,18 @@ export class AppComponent {
   } 
 
   update(p: Person) {
+    p.name = faker.name.findName();
+    p.address = faker.address.streetAddress();
+    p.city = faker.address.city();
+    p.country = faker.address.country();
+    p.age = Math.round(Math.random() * 100);
+    p._id = new Date().getMilliseconds().toString();
+
+    this.store.dispatch(new personUpdate({person: p}));
 
   }
 
   delete(p: Person) {
-
+    this.store.dispatch(new personDelete({id: p._id}));
   }
 }
