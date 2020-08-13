@@ -11,4 +11,6 @@
 
 >npm install @ngrx/store --save
 
+>npm install @ngrx/entity --save
+
 Obs: Adicionar extensão no navegador  Redux-devtools-extension 
