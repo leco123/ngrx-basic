@@ -35,7 +35,7 @@ export class AppComponent {
  
     this.store.dispatch(new personNew({person: pes}));
 
-  }
+  } 
 
   update(p: Person) {
 
