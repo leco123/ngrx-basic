@@ -1,34 +1,38 @@
-import { Action } from '@ngrx/store';
+import { Action, State } from '@ngrx/store';
 import * as fromPersonActions from './person.actions';
 import { Person } from '../person';
 import { state } from '@angular/animations';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
-export const initialState: Array<Person> = [];
+// Entitys
+export interface PeopleState extends EntityState<Person>{
+
+}
+
+// Adapter functions 
+export const peopleAdapter: EntityAdapter<Person> = createEntityAdapter<Person>({
+  selectId:(p: Person) => <string>p._id
+});
+
+export const initialState: PeopleState = peopleAdapter.getInitialState({});
  
 export function reducer(state = initialState, action: fromPersonActions.PersonActions) {
   switch (action.type) {
-    case fromPersonActions.PersonActionTypes.PERSON_ALL:
-      return state;
- 
+    
     case fromPersonActions.PersonActionTypes.PERSON_NEW:
         // concat retorna um novo array e não altera o array existente apenas
         // retorna um novo array com as novas informações setadas
-        return state.concat([action.payload.person]);
+        return peopleAdapter.addOne(action.payload.person, state);
  
     case fromPersonActions.PersonActionTypes.PERSON_UPDATE:
-        // Pode ser criado um novo array com slice sem passar nenhum parâmetro
-        // people vai criar uma cópia do state
-        let people = state.slice();
-        let i = people.findIndex(p => p._id == action.payload.person._id);
-        if (i >= 0)
-             people[i] = action.payload.person;  
-         // Retorna people com novo endereço/objeto 
-         // sem alterar o estado apenas retornando um novo estado 
-         return people;
+         return peopleAdapter.updateOne({
+            id: action.payload.id, 
+            changes: action.payload.changes
+         }, state);
 
     case fromPersonActions.PersonActionTypes.PERSON_DELETE:
         // Filter também retorna um novo array conforme filtro aplicado
-        return state.filter(p => p._id != action.payload.id);
+        return peopleAdapter.removeOne(action.payload.id, state);
 
     default:
       return state;

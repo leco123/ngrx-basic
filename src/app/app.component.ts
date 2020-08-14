@@ -5,7 +5,7 @@ import * as faker from 'faker';
 import { AppState } from './store';
 import { Store, select } from '@ngrx/store';
 import { PersonNew, PersonUpdate, PersonDelete, PersonAll } from './store/person.actions';
-import { selectPeople } from './store/index';
+import * as fromPeoplePersonSelectors from './store/person.selectors';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,7 +23,7 @@ export class AppComponent {
     // Obtendo as pessoas através de uma váriavel people
     // que fica dentro da interface AppState
     //this.people$ = this.store.pipe(select('people')); // oque quero retornar
-    this.people$ = this.store.select(selectPeople); 
+    this.people$ = this.store.select(fromPeoplePersonSelectors.selectAll); 
     /*this.store.select(selectPeopleCount)
         .subscribe(n => console.log(n));*/
   }
@@ -50,7 +50,7 @@ export class AppComponent {
     p.age = Math.round(Math.random() * 100);
   
 
-    this.store.dispatch(new PersonUpdate({person: p}));
+    this.store.dispatch(new PersonUpdate({id: <string>p._id, changes: p}));
   }
 
   delete(p: Person) {
