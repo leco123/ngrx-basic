@@ -1,12 +1,15 @@
-import { createAction, props, Action } from '@ngrx/store';
-import { Person } from '../person';
+import { Person } from './../person';
+import { Action } from '@ngrx/store';
 
+// Ações relacionadas a pessoas
+// Actions que serão usadas no projeto
 export enum PersonActionTypes {
-    PERSON_ALL = '[PERSON_ALL] Get all people',
-    PERSON_NEW = '[PERSON_NEW] Add new Person',
-    PERSON_UPDATE = '[PERSON_UPDATE] Update a Person',
-    PERSON_DELETE = '[PERSON_DELETE] Delete a Person'
+    PERSON_ALL = '[PERSON_ALL Component] Get all people',
+    PERSON_NEW = '[PERSON_NEW Component] add new people',
+    PERSON_UPDATE = '[PERSON_UPDATE Component] update people',
+    PERSON_DELETE = '[PERSON_DELETE Component] Delete a person',
 }
+
 
 export class PersonAll implements Action {
     readonly type = PersonActionTypes.PERSON_ALL;
@@ -27,4 +30,8 @@ export class PersonDelete implements Action {
     constructor(public payload: {id: string}){}
 }
 
-export type PersonActions = PersonAll | PersonNew | PersonUpdate | PersonDelete;
+
+export type PersonActions = PersonAll 
+                            | PersonNew 
+                            | PersonUpdate 
+                            | PersonDelete;
